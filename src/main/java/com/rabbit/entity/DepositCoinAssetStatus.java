@@ -6,6 +6,7 @@ public enum DepositCoinAssetStatus {
 	
 	SUCCESS, 
 	
-	FAILURE
+	FAILURE,
+	SS
 
 }

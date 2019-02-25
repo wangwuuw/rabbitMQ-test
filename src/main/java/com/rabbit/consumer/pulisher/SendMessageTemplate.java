@@ -12,6 +12,7 @@ import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSON;
 import com.rabbit.config.RabbitmqConfig;
 import com.rabbit.entity.DepositCoinAssetStatus;
 import com.rabbit.entity.TransferInDto;
@@ -26,15 +27,21 @@ public class SendMessageTemplate {
 		String exchange = rabbitConfig.getExchange();
 		String key = rabbitConfig.getTransferInKey();
 		Long id = new Random().nextLong();
+//		   TransferCoinMessage transferCoinMessage = new TransferCoinMessage();
+//	        transferCoinMessage.setTxid(order.getInnerOrderNo());
+//	        transferCoinMessage.setAddress(order.getCoinAddress());
+//	        transferCoinMessage.setAmount(order.getRealNumber().toString());
+//	        transferCoinMessage.setTxfee(order.getTxFee().toString());
+//	        transferCoinMessage.setMessage(order.getMsg());
 		TransferInDto transferInDto = new TransferInDto();
 		transferInDto.setAmount(new BigDecimal("100"));
 		transferInDto.setAssetCode("RMB");
-		transferInDto.setAssetStatus(DepositCoinAssetStatus.CONFIRM);
+		transferInDto.setAssetStatus(DepositCoinAssetStatus.SS);
 		transferInDto.setFromWallet("wangwu");
 		transferInDto.setOrderId(id.toString());
-		transferInDto.setSendMessage("买糖吃");
+		transferInDto.setSendMessage("111");
 		transferInDto.setToWallet("mayun");
-		Object message = "消息编号为"+id;
+		Object message = JSON.toJSON(transferInDto);//"消息编号为"+id;
 		try {
 			MessageProperties messageProperties = new MessageProperties();
 
